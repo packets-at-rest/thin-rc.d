@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+
+# PROVIDE: thin
+# REQUIRE: DAEMON
+# BEFORE: LOGIN
+# KEYWORD: shutdown
+
+# Add the following lines to /etc/rc.conf to enable thin:
+# thin_enable (bool):      Set to YES to enable
+#                 Default: NO
+# thin_host (str):   Logging Directory
+#               Default: "0.0.0.0"
+# thin_port (str):   Logging Format
+#               Default: "80"
+# thin_appdir (str):  Network interface to sniff
+#               Default: "/usr/local/www/app"
+# thin_adapter (str):    Extra flags passed 
+#               Default: "autodetect"
+# thin_log (str):    Extra flags passed 
+#               Default: "/var/log/thin.log"
+# thin_env (str):    Extra flags passed 
+#               Default: "development"
+# thin_servers (str):    Extra flags passed 
+#               Default: ""
+
+. /etc/rc.subr
+
+name=thin
+rcvar=thin_enable
+
+load_rc_config ${name}
+
+[ -z "$thin_enable" ]    && thin_enable="NO"
+[ -z "$thin_host" ]    && thin_host="0.0.0.0"
+[ -z "$thin_port" ]    && thin_port="80"
+[ -z "$thin_appdir" ]    && thin_appdir="/usr/local/www/app"
+[ -z "$thin_adapter" ]    && thin_adapter="autodetect"
+[ -z "$thin_log" ]    && thin_log="/var/log/thin.log"
+[ -z "$thin_env" ]    && thin_env="development"
+[ -z "$thin_servers" ]    && thin_servers="1"
+
+piddir=/var/run
+pidfile=${piddir}/${name}.pid
+
+
+if [ -d $piddir ]; then
+  mkdir -p $piddir
+fi
+
+
+command="/usr/local/bin/thin"
+command_args="-a ${thin_host} -p ${thin_port} -c ${thin_appdir} -s ${thin_servers} -A ${thin_adapter} -l ${thin_log} -f ${thin_format} -P ${pidfile} -e ${thin_env} -d"
+
+require_files="${command}"
+
+run_rc_command "$1"
