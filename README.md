@@ -10,7 +10,7 @@ mkdir -p /usr/local/etc/rc.d
 cd /usr/local/etc/rc.d/
 fetch https://raw.githubusercontent.com/packets-at-rest/thin-rc.d/master/rc.d/thin
 chmod +x thin
-echo "thin_enable="\YES\" >> /etc/rc.conf
+echo "thin_enable="\YES\"" >> /etc/rc.conf
 ```
 
 Provide the additional configurations for your /etc/rc.conf
