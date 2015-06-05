@@ -45,6 +45,15 @@ Provide the additional configurations for your /etc/rc.conf
 #               Default: ""
 ```
 
+## Example Configuration
+
+```shell
+thin_enable="YES"
+thin_host="10.1.0.50"
+thin_port="9001"
+thin_appdir="/opt/packets-at-rest"
+```
+
 ## Service
 
 `/usr/local/etc/rc.d/thin start`
