@@ -47,7 +47,7 @@ thin_adapter_cmd="-A "
 [ -z "$thin_servers" ]    && thin_servers="1"
 
 if [ -z "$thin_adapter_cmd" ]; then
-  ""
+  :
 else
   thin_adapter_cmd="-A $thin_adapter " 
 fi
