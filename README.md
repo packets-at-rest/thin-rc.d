@@ -2,9 +2,20 @@
 Simple FreeBSD rc script for thin
 
 ## Reason
-Thin does not provide --install for FreeBSD.
+Thin does not provide `--install` for the FreeBSD platform. 
+
+* https://github.com/macournoyer/thin/
+```ruby
+File.directory?('/etc/rc.d') ? '/etc/rc.d/thin' : '/etc/init.d/thin'
+```
+The thin `rubygem-thin` does not provide a rc.d script either. 
+
+* https://github.com/freebsd/freebsd-ports/tree/master/www/rubygem-thin
 
 ## Install
+
+Download the rc.d script, make it executable, place it in the `/usr/local/etc/rc.d/`, profit $$.
+
 ```shell
 mkdir -p /usr/local/etc/rc.d
 cd /usr/local/etc/rc.d/
