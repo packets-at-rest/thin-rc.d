@@ -29,7 +29,9 @@
 name=thin
 rcvar=thin_enable
 start_cmd="thin_start"
-stop_cmd="thin_stop"
+stop_cmd="thin stop"
+status_cmd="thin_status"
+
 
 command="/usr/local/bin/${name}"
 
@@ -53,14 +55,15 @@ else
 fi
 
 piddir=/var/run
-pidfile=${piddir}/${name}.pid
+pidfile=${piddir}/${name}.${thin_port}.pid
+pre_pidfile=${piddir}/${name}.pid
 
 
 if [ -d $piddir ]; then
   mkdir -p $piddir
 fi
 
-[ -z "$thin_flags" ] && thin_flags="-a ${thin_host} -p ${thin_port} -c ${thin_appdir} -s ${thin_servers} ${thin_adapter_cmd}-l ${thin_log} -f ${thin_format} -P ${pidfile} -e ${thin_env} -d"
+[ -z "$thin_flags" ] && thin_flags="-a ${thin_host} -p ${thin_port} -c ${thin_appdir} -s ${thin_servers} ${thin_adapter_cmd}-l ${thin_log} -f ${thin_format} -P ${pre_pidfile} -e ${thin_env} -d"
 
 require_files="${command}"
 
@@ -71,10 +74,14 @@ thin_start()
 	$command start $thin_flags
 }
 
-thin_stop()
-{
-	$command stop
-}
 
+thin_status()
+{
+	if [ -f "$pidfile" ]; then
+		echo "${name} is running as pid `cat $pidfile`."
+	else
+		echo "${name} is not running."
+	fi
+}
 
 run_rc_command "$1"
