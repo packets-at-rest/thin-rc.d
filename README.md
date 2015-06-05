@@ -37,3 +37,9 @@ Provide the additional configurations for your /etc/rc.conf
 ## Service
 
 `/usr/local/etc/rc.d/thin start`
+
+## Logs
+
+You logs will be here by default
+
+`/var/log/thin.80.log`
