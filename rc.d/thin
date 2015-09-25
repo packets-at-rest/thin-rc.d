@@ -29,7 +29,7 @@
 name=thin
 rcvar=thin_enable
 start_cmd="thin_start"
-stop_cmd="thin stop"
+stop_cmd="thin_stop"
 status_cmd="thin_status"
 
 
@@ -82,6 +82,13 @@ thin_status()
 	else
 		echo "${name} is not running."
 	fi
+}
+
+thin_stop()
+{
+	echo "Stopping Thin RC"
+	echo $command -P "$pidfile" stop 
+	$command -P "$pidfile" stop
 }
 
 run_rc_command "$1"
